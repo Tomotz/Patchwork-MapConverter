@@ -4,10 +4,10 @@
   "version": "0.1.14",
   "description": "Executable wrapper for https://github.com/ChiefOfGxBxL/WC3MapTranslator",
   "main": "./dist/index.js",
-  "bin": "./dist/index.js",
+  "bin": "./dist/console.js",
   "files": [
     "./external",
-    "/dist"
+    "./dist"
   ],
   "scripts": {
     "prebuild": "node generateProgramMetadata.js > src/metadata.ts",

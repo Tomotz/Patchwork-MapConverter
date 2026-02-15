@@ -18,7 +18,7 @@ import { type CustomScript } from '../translator/data/content/CustomScript'
 import { type ScriptedTrigger } from '../translator/data/content/ScriptedTrigger'
 import { FileBlacklist } from './FileBlacklist'
 import { FormatConverters } from '../converter/formats/FormatConverters'
-import { FormatConverter } from '@/converter'
+import { FormatConverter } from '../converter'
 
 const log = LoggerFactory.createLogger('TriggerComposer')
 
