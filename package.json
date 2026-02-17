@@ -9,10 +9,18 @@
     "./external",
     "./dist"
   ],
+  "exports": {
+    ".": "./dist/index.js",
+    "./wc3maptranslator": "./dist/wc3maptranslator/index.js",
+    "./translator": "./dist/translator/index.js",
+    "./converter": "./dist/converter/index.js",
+    "./enchancements": "./dist/enhancements/index.js",
+    "./mpq": "./dist/mpq/index.js"
+  },
   "scripts": {
     "prebuild": "node generateProgramMetadata.js > src/metadata.ts",
     "clean": "tsc --build --clean",
-    "build": "npm run clean && tsc --build",
+    "build": "pnpm run clean && tsc --build",
     "lint": "pnpm exec eslint --cache --concurrency auto",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
