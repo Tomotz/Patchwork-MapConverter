@@ -1,5 +1,3 @@
-import { roundTo } from "../util/round"
-
 export class W3Buffer {
   private _offset = 0
   private readonly _buffer: Buffer
@@ -23,7 +21,7 @@ export class W3Buffer {
   public readFloat (): number {
     const float: number = this._buffer.readFloatLE(this._offset)
     this._offset += 4
-    return roundTo(float, 3)
+    return float
   }
 
   public readString (): string {
