@@ -41,6 +41,7 @@ interface Modification {
   level?: number
   column?: number
   variation?: number
+  endToken?: string
 }
 
 interface ObjectModificationTable {

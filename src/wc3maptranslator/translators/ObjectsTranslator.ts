@@ -124,8 +124,9 @@ export class ObjectsTranslator implements Translator<ObjectModificationTable> {
             outBufferToWar.addString(mod.value as string)
           }
 
-          // End of struct
-          if (tableType === TableType.original) {
+          if (mod.endToken != null) {
+            outBufferToWar.addChars(mod.endToken)
+          } else if (tableType === TableType.original) {
             // Original objects are ended with their base id (e.g. hfoo)
             outBufferToWar.addChars(defKey)
           } else {
@@ -202,10 +203,10 @@ export class ObjectsTranslator implements Translator<ObjectModificationTable> {
               modification.value = outBufferToJSON.readString()
             }
 
-            if (isOriginalTable) {
-              outBufferToJSON.readInt() // should be 0 for original objects
-            } else {
-              outBufferToJSON.readChars(4) // should be object ID for custom objects
+            const endToken = outBufferToJSON.readChars(4)
+            const defaultEndToken = isOriginalTable ? originalId : '\0\0\0\0'
+            if (endToken !== defaultEndToken) {
+              modification.endToken = endToken
             }
 
             objectDefinition.push(modification)
