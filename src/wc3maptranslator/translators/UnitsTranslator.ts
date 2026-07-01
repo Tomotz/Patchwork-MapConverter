@@ -33,7 +33,7 @@ export class UnitsTranslator implements Translator<Unit[]> {
          * Header
          */
     outBufferToWar.addChars('W3do')
-    outBufferToWar.addInt(9)
+    outBufferToWar.addInt(8)
     outBufferToWar.addInt(11)
     outBufferToWar.addInt(unitsJson?.length || 0) // number of units
 
