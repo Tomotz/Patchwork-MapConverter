@@ -2,6 +2,10 @@ import { HexBuffer } from '../HexBuffer'
 import { type WarResult, type JsonResult } from '../CommonInterfaces'
 import { type Translator } from './Translator'
 
+function normalizeLineEndingsToCrlf (value: string): string {
+  return value.replace(/\r\n|\r|\n/g, '\r\n')
+}
+
 export class StringsTranslator implements Translator<Record<string, string>> {
   private static instance: StringsTranslator
 
@@ -33,7 +37,7 @@ export class StringsTranslator implements Translator<Record<string, string>> {
       outBufferToWar.addNewLine()
       outBufferToWar.addChars('{')
       outBufferToWar.addNewLine()
-      outBufferToWar.addStringNoNewline(stringsJson[key] as unknown as string)
+      outBufferToWar.addStringNoNewline(normalizeLineEndingsToCrlf(stringsJson[key] as unknown as string))
       outBufferToWar.addNewLine()
       outBufferToWar.addChars('}')
       outBufferToWar.addNewLine()
@@ -47,8 +51,8 @@ export class StringsTranslator implements Translator<Record<string, string>> {
   }
 
   public warToJson (buffer: Buffer): JsonResult<Record<string, string>> {
-    const wts = buffer.toString().replace(/\r\n/g, '\n') // may contain Windows linebreaks (\r\n), but below regex just assumes \n
-    const matchStringDefinitionBlock = /STRING ([0-9]+)\n?(?:.*\n)?{\n((?:.|\n)*?)\n}/g // see: https://regexr.com/3r572
+    const wts = buffer.toString()
+    const matchStringDefinitionBlock = /STRING ([0-9]+)\r?\n?(?:.*\r?\n)?{\r?\n((?:.|\r?\n)*?)\r?\n}/g
 
     const result: Record<string, string> = {} // stores the json form of strings file
     let match: RegExpExecArray | null // stores individual matches as input is read
