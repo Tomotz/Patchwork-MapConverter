@@ -113,9 +113,9 @@ program
   .addArgument(new Argument('<input>', 'input directory path').argRequired())
   .addArgument(new Argument('<output>', 'output directory or file path').argRequired())
   .option("--mpq", "Output to MPQFile in addition to folder output", false)
-  .action(async (input: string, output: string, mpq:boolean) => {
+  .action(async (input: string, output: string, options: { mpq?: boolean }) => {
     try {
-      if (mpq){
+      if (options.mpq === true){
         SupplementTranslatorRecord(EnhancementManager.mapDataExtension)
         await Json2WarService.convert(input, output + 'temp')
         //MPQCOnverter here
