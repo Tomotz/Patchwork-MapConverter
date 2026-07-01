@@ -38,10 +38,7 @@ export class W3Buffer {
     }
     this._offset += 1 // consume the \0 end-of-string delimiter
 
-    const buf = Buffer.allocUnsafe(len+1);
-    this._buffer.copy(buf, 0, start, this._offset);
-
-    return buf.toString();
+    return this._buffer.toString('utf8', start, start + len);
   }
 
   public readChars (len = 1): string {
