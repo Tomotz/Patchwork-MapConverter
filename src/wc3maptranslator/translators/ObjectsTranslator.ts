@@ -186,7 +186,8 @@ export class ObjectsTranslator implements Translator<ObjectModificationTable> {
             }
 
             modification.id = outBufferToJSON.readChars(4)
-            modification.type = ObjectsTranslator.varTypes[outBufferToJSON.readInt() as 0,1,2,3] as unknown as ModificationType // 'int' | 'real' | 'unreal' | 'string',
+            const modificationType = outBufferToJSON.readInt()
+            modification.type = ObjectsTranslator.varTypes[modificationType as 0 | 1 | 2 | 3] as ModificationType // 'int' | 'real' | 'unreal' | 'string',
 
             if (this.type === ObjectType.Doodads || this.type === ObjectType.Abilities || this.type === ObjectType.Upgrades) {
               modification.level = outBufferToJSON.readInt()
