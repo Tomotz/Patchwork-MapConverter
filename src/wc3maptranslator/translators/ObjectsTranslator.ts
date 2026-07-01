@@ -52,7 +52,8 @@ export class ObjectsTranslator implements Translator<ObjectModificationTable> {
     /*
          * Header
          */
-    outBufferToWar.addInt(2) // file version
+    const fileVersion = json.formatVersion ?? 3
+    outBufferToWar.addInt(fileVersion) // file version
 
     const generateTableFromJson = (tableType: TableType, tableData: object): void => { // create "original" or "custom" table
       if (!tableData) {
@@ -73,6 +74,10 @@ export class ObjectsTranslator implements Translator<ObjectModificationTable> {
         }
 
         // Number of modifications made to this object
+        if (fileVersion >= 3) {
+          outBufferToWar.addInt(1) // number of modification sets
+          outBufferToWar.addInt(0) // set flag
+        }
         outBufferToWar.addInt(obj?.length || 0)
 
         obj?.forEach((mod: Modification) => {
@@ -148,6 +153,7 @@ export class ObjectsTranslator implements Translator<ObjectModificationTable> {
     const outBufferToJSON = new W3Buffer(buffer)
 
     const fileVersion = outBufferToJSON.readInt()
+    result.formatVersion = fileVersion
 
     const readModificationTable = (isOriginalTable: boolean): void => {
       const numTableModifications = outBufferToJSON.readInt()

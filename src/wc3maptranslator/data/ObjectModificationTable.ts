@@ -44,6 +44,7 @@ interface Modification {
 }
 
 interface ObjectModificationTable {
+  formatVersion?: number
   original: Record<string, Modification[]>
   custom: Record<string, Modification[]>
 }
