@@ -1,7 +1,7 @@
 import { WithImplicitCoercion } from 'buffer'
 import ieee754 from 'ieee754'
 
-function int2Hex(num: number, isShort = false) {
+function int2Hex(num: number, isShort = false): string[] {
   const bits = isShort ? 16 : 32;
   const mask = (1n << BigInt(bits)) - 1n;
   const val = BigInt(num) & mask;
@@ -9,7 +9,7 @@ function int2Hex(num: number, isShort = false) {
   const hex = val.toString(16).padStart(width, '0').toUpperCase();
 
   // split into bytes and reverse
-  return hex.match(/.{2}/g)!.reverse().join('');
+  return hex.match(/.{2}/g)!.reverse().map(byte => '0x' + byte);
 }
 const charToHex = (character: string): string => {
   return '0x' + character.charCodeAt(0).toString(16)
