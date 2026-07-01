@@ -45,6 +45,7 @@ export class W3Buffer {
     if (len == 1){
       const ch = this._buffer.at(this._offset);
       if (ch === undefined) return '';
+      this._offset += 1
       return String.fromCharCode(ch);
     }
 
